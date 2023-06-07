@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Supermarket Discounts</title>
+    <style>
+      /* Apply basic styles to the page */
+      body {
+        font-family: Arial, sans-serif;
+        margin: 0;
+        padding: 0;
+      }
+
+      /* Style the table */
+      table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+      }
+
+      /* Style the table headers */
+      th {
+        background-color: #f2f2f2;
+        border: 1px solid #ddd;
+        padding: 8px;
+        text-align: left;
+        font-size: 16px;
+      }
+
+      /* Style the table cells */
+      td {
+        border: 1px solid #ddd;
+        padding: 8px;
+        font-size: 14px;
+      }
+
+      /* Apply alternate row color to the table */
+      tr:nth-child(even) {
+        background-color: #f2f2f2;
+      }
+
+      /* Style the table header of the 'Item Name' column */
+      th:first-child {
+        width: 30%;
+      }
+
+      /* Style the table headers and cells of the numeric columns */
+      th:nth-child(2),
+      th:nth-child(3),
+      th:nth-child(4),
+      td:nth-child(2),
+      td:nth-child(3),
+      td:nth-child(4) {
+        text-align: right;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Countdown Discounts</h1>
+    <label for="search">Search:</label>
+    <input type="text" id="search" name="search">
+    <label for="category">Category:</label>
+    <select id="category" name="category" onchange="filterTable()">
+
+      <option value="">All Categories</option>
+      {% for category in categories %}
+      <option value="{{ category }}">{{ category }}</option>
+      {% endfor %}
+    </select>
+    <script>
+    function filterTable() {
+      const category = document.getElementById("category").value;
+      const tableRows = document.querySelectorAll("#table-body tr");
+
+      for (let i = 0; i < tableRows.length; i++) {
+        const row = tableRows[i];
+        const rowCategory = row.querySelector("td:nth-child(6)").textContent;
+
+        if (category === "" || rowCategory === category) {
+          row.style.display = "table-row";
+        } else {
+          row.style.display = "none";
+        }
+      }
+    }
+    </script>
+    <table>
+      <thead>
+        <tr>
+          <th>Item Name</th>
+          <th>Full Price</th>
+          <th>New Price</th>
+          <th>Amount Saved</th>
+          <th>Percentage Discounted</th>
+          <th>Category</th>
+        </tr>
+      </thead>
+      <tbody id="table-body">
+        {% for item in items %}
+        <tr>
+          <td>{{ item[0] }}</td>
+          <td>{{ item[1] }}</td>
+          <td>{{ item[2] }}</td>
+          <td>{{ item[3] }}</td>
+          <td>{{ item[4] }}%</td>
+          <td>{{ item[5] }}</td>
+        </tr>
+        {% endfor %}
+      </tbody>
+      <div class="pagination">
+        <a href="#" class="prev">Previous</a>
+        <a href="#" class="page active">1</a>
+        <a href="#" class="page">2</a>
+        <a href="#" class="page">3</a>
+        <a href="#" class="next">Next</a>
+      </div>
+    </table>
+    <script>
+      const searchInput = document.getElementById('search');
+      const tableBody = document.getElementById('table-body');
+
+      searchInput.addEventListener('input', () => {
+        const searchValue = searchInput.value.toLowerCase();
+
+        // Filter the table rows based on the search term
+        const rows = tableBody.getElementsByTagName('tr');
+        for (let i = 0; i < rows.length; i++) {
+          const name = rows[i].getElementsByTagName('td')[0].textContent.toLowerCase();
+          if (name.includes(searchValue)) {
+            rows[i].style.display = '';
+          } else {
+            rows[i].style.display = 'none';
+          }
+        }
+      });
+    </script>
+  </body>
+</html>
