@@ -11,7 +11,7 @@ import pandas as pd
 
 
 class DataGetter:
-    def generate():
+    def generate(self):
         # Create dictionaries of keywords for each category
         meat_poultry = ['beef', 'pork', 'chicken', 'turkey', 'lamb', 'sausage', 'patties', 'steak']
         fish_seafood = ['fish', 'salmon', 'shrimp', 'crab', 'lobster', 'prawn', 'mussels', 'fillet']

@@ -8,7 +8,7 @@ app = Flask(__name__)
 def index():
     items = []
     categories = []
-    with open('data/07_05_2023.csv') as file:
+    with open('data/20_06_2023.csv') as file:
         reader = csv.reader(file)
         for row in reader:
             items.append(row)
